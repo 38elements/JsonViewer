@@ -49,7 +49,6 @@ json_viewer._close = function() {
     var child_list = document.querySelectorAll("[parent_id=\"" + target_parent_id + "\"]");
     var children = Array.prototype.slice.call(child_list);
     children.map(function(c){
-        console.log(c.id)
         c.style.display = "none";
         json_viewer._close.call(c);
     });
@@ -58,6 +57,15 @@ json_viewer._close = function() {
 json_viewer.close_all = function() {
     var root =  document.querySelector("[parent_id=\"" + this.root + "\"]");
     this._close.call(root);
+}
+
+json_viewer.open = function() {
+    var target_parent_id = this.id;
+    var child_list = document.querySelectorAll("[parent_id=\"" + target_parent_id + "\"]");
+    var children = Array.prototype.slice.call(child_list);
+    children.map(function(c){
+        c.style.display = "block";
+    });
 }
 
 json_viewer.display = function() {
