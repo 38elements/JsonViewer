@@ -10,7 +10,7 @@ json_viewer._put = function(data, indent, key, parent_id) {
     var left = this._indent_width * indent;
     if (data.toString() === "[object Object]") {
         this._id += 1; 
-        document.body.innerHTML += "<div parent_id=\"" + parent_id + "\" id=\"" + this._id + "\" style=\"left:" + left + "px;\">" + key + ":{}</div>"
+        document.body.innerHTML += "<div data-state=\"1\" parent_id=\"" + parent_id + "\" id=\"" + this._id + "\" style=\"left:" + left + "px;\" data_type=\"Object\" >" + key + ":{}</div>"
         indent += 1
         var next_parent_id = this._id
         Object.keys(data).map(function(key) {
@@ -19,7 +19,7 @@ json_viewer._put = function(data, indent, key, parent_id) {
     }
     else if (Array.isArray(data)) {
         this._id += 1; 
-        document.body.innerHTML += "<div parent_id=\"" + parent_id + "\" id=\"" + this._id + "\"  style=\"left:" + left + "px;<div\">" + key + ":[]</div>"
+        document.body.innerHTML += "<div data-state=\"1\"  parent_id=\"" + parent_id + "\" id=\"" + this._id + "\"  style=\"left:" + left + "px;\" data_type=\"Array\" >" + key + ":[]</div>"
         indent += 1
         var next_parent_id = this._id
         data.map(function(value, index) {
@@ -28,19 +28,19 @@ json_viewer._put = function(data, indent, key, parent_id) {
     }
     else if (data.constructor === String) {
         this._id += 1; 
-        document.body.innerHTML += "<div parent_id=\"" + parent_id + "\" id=\"" + this._id + "\" style=\"left:" + left + "px;\">" + key + ":\"" + data + "\"</div>"
+        document.body.innerHTML += "<div data-state=\"1\"  parent_id=\"" + parent_id + "\" id=\"" + this._id + "\" style=\"left:" + left + "px;\" data_type=\"String\" >" + key + ":\"" + data + "\"</div>"
     }
     else if (data === null) {
         this._id += 1; 
-        document.body.innerHTML += "<div parent_id=\"" + parent_id + "\" id=\"" + this._id + "\"  style=\"left:" + left + "px;\">" + key + ":null</div>"
+        document.body.innerHTML += "<div data-state=\"1\"  parent_id=\"" + parent_id + "\" id=\"" + this._id + "\"  style=\"left:" + left + "px;\" data_type=\"null\" >" + key + ":null</div>"
     }
     else if (data === undefined) {
         this._id += 1; 
-        document.body.innerHTML += "<div parent_id=\"" + parent_id + "\" id=\"" + this._id + "\"  style=\"left:" + left + "px;\">" + key + ":undefined</div>"
+        document.body.innerHTML += "<div data-state=\"1\"  parent_id=\"" + parent_id + "\" id=\"" + this._id + "\"  style=\"left:" + left + "px;\" data_type=\"undefined\" >" + key + ":undefined</div>"
     }
     else {
         this._id += 1; 
-        document.body.innerHTML += "<div parent_id=\"" + parent_id + "\" id=\"" + this._id + "\"  style=\"left:" + left + "px;\">" + key + ":" + data + "</div>"
+        document.body.innerHTML += "<div data-state=\"1\"  parent_id=\"" + parent_id + "\" id=\"" + this._id + "\"  style=\"left:" + left + "px;\" data_type=\"Number\" >" + key + ":" + data + "</div>"
     }
 }
 
@@ -48,8 +48,10 @@ json_viewer._close = function() {
     var target_parent_id = this.id;
     var child_list = document.querySelectorAll("[parent_id=\"" + target_parent_id + "\"]");
     var children = Array.prototype.slice.call(child_list);
+    this.dataset.state = "0";
     children.map(function(c){
         c.style.display = "none";
+        c.dataset.state = "0";
         json_viewer._close.call(c);
     });
 }
@@ -59,17 +61,32 @@ json_viewer.close_all = function() {
     this._close.call(root);
 }
 
-json_viewer.open = function() {
+json_viewer._open = function() {
     var target_parent_id = this.id;
     var child_list = document.querySelectorAll("[parent_id=\"" + target_parent_id + "\"]");
     var children = Array.prototype.slice.call(child_list);
+    this.dataset.state = "1";
     children.map(function(c){
         c.style.display = "block";
     });
 }
 
+json_viewer.change = function() {
+    if (this.dataset.state === "1") {
+        json_viewer._close.call(this);
+    }
+    else {
+        json_viewer._open.call(this);
+    }
+}
+
 json_viewer.display = function() {
     this._put(this._data, 0);
+    child_list = document.querySelectorAll("[data_type=\"Object\"],[data_type=\"Array\"]");
+    var children = Array.prototype.slice.call(child_list);
+    children.map(function(c){
+        c.addEventListener("click", json_viewer.change, false);
+    });
 }
 
 json_viewer.display()
