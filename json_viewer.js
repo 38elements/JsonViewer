@@ -10,7 +10,7 @@ json_viewer._put = function(data, indent, key, parent_id) {
     var left = this._indent_width * indent;
     if (data.toString() === "[object Object]") {
         this._id += 1; 
-        document.body.innerHTML += "<div data-state=\"1\" parent_id=\"" + parent_id + "\" id=\"" + this._id + "\" style=\"left:" + left + "px;\" data_type=\"Object\" >" + key + ":{}</div>"
+        document.body.innerHTML += "<div data-state=\"1\" parent_id=\"" + parent_id + "\" id=\"" + this._id + "\" style=\"left:" + left + "px;\" data_type=\"Object\" ><div class=\"mark\">+</div><span class=\"key_value\">" + key + ":{}</span></div>"
         indent += 1
         var next_parent_id = this._id
         Object.keys(data).map(function(key) {
@@ -19,7 +19,7 @@ json_viewer._put = function(data, indent, key, parent_id) {
     }
     else if (Array.isArray(data)) {
         this._id += 1; 
-        document.body.innerHTML += "<div data-state=\"1\"  parent_id=\"" + parent_id + "\" id=\"" + this._id + "\"  style=\"left:" + left + "px;\" data_type=\"Array\" >" + key + ":[]</div>"
+        document.body.innerHTML += "<div data-state=\"1\"  parent_id=\"" + parent_id + "\" id=\"" + this._id + "\"  style=\"left:" + left + "px;\" data_type=\"Array\" ><div class=\"mark\">+</div><span class=\"key_value\">" + key + ":&nbsp;[]</span></div>"
         indent += 1
         var next_parent_id = this._id
         data.map(function(value, index) {
@@ -28,19 +28,19 @@ json_viewer._put = function(data, indent, key, parent_id) {
     }
     else if (data.constructor === String) {
         this._id += 1; 
-        document.body.innerHTML += "<div data-state=\"1\"  parent_id=\"" + parent_id + "\" id=\"" + this._id + "\" style=\"left:" + left + "px;\" data_type=\"String\" >" + key + ":\"" + data + "\"</div>"
+        document.body.innerHTML += "<div data-state=\"1\"  parent_id=\"" + parent_id + "\" id=\"" + this._id + "\" style=\"left:" + left + "px;\" data_type=\"String\" ><span class=\"key_value\">" + key + ":&nbsp;\"" + data + "\"</span></div>"
     }
     else if (data === null) {
         this._id += 1; 
-        document.body.innerHTML += "<div data-state=\"1\"  parent_id=\"" + parent_id + "\" id=\"" + this._id + "\"  style=\"left:" + left + "px;\" data_type=\"null\" >" + key + ":null</div>"
+        document.body.innerHTML += "<div data-state=\"1\"  parent_id=\"" + parent_id + "\" id=\"" + this._id + "\"  style=\"left:" + left + "px;\" data_type=\"null\" ><span class=\"key_value>\"" + key + ":&nbsp;null</span></div>"
     }
     else if (data === undefined) {
         this._id += 1; 
-        document.body.innerHTML += "<div data-state=\"1\"  parent_id=\"" + parent_id + "\" id=\"" + this._id + "\"  style=\"left:" + left + "px;\" data_type=\"undefined\" >" + key + ":undefined</div>"
+        document.body.innerHTML += "<div data-state=\"1\"  parent_id=\"" + parent_id + "\" id=\"" + this._id + "\"  style=\"left:" + left + "px;\" data_type=\"undefined\" ><span class=\"key_value\">" + key + ":&nbsp;undefined</span></div>"
     }
     else {
         this._id += 1; 
-        document.body.innerHTML += "<div data-state=\"1\"  parent_id=\"" + parent_id + "\" id=\"" + this._id + "\"  style=\"left:" + left + "px;\" data_type=\"Number\" >" + key + ":" + data + "</div>"
+        document.body.innerHTML += "<div data-state=\"1\"  parent_id=\"" + parent_id + "\" id=\"" + this._id + "\"  style=\"left:" + left + "px;\" data_type=\"Number\" ><span class=\"key_value\">" + key + ":&nbsp;" + data + "</span></div>"
     }
 }
 
