@@ -37,3 +37,8 @@ span.key_value {
     position: relative;
     top: 2px;
 }
+
+#output {
+    margin-top: 30px;
+    border: none;
+}

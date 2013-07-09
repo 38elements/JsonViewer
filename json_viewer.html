@@ -16,14 +16,12 @@
         <script type="text/template" id="_put_number">
             <div parent_id="{{parent_id}}" id="{{id}}" style="left:{{left}}px;" data_type="Number" ><span class="key_value" >{{key}}:&nbsp;{{data}}</span></div>
         </script>
-        <script type="text/template" id="_put_null">
-            <div parent_id="{{parent_id}}" id="{{id}}" style="left:{{left}}px;" data_type="null" ><span class="key_value">{{key}}:&nbsp;null</span></div>
-        </script>
-        <script type="text/template" id="_put_undefined">
-            <div parent_id="{{parent_id}}" id="{{id}}" style="left:{{left}}px;" data_type="undefined" ><span class="key_value">{{key}}:&nbsp;undefined</span></div>
-        </script>
     </head>
     <body>
+        JSON<br/>
+        <textarea id="input" rows="4" cols="40" ></textarea><br/>
+        <input type="button" id="display" value="display" />
+        <div id="output"></div>
         <script src="http://twitter.github.com/hogan.js/builds/2.0.0/hogan-2.0.0.js"></script>
         <script src="json_viewer.js"></script>
     </body>
