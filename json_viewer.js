@@ -6,7 +6,7 @@ json_viewer._data = {"name": "foo", "list":[1,{fff: 1, er:"ty"},2,3,4,5], "obj":
 
 json_viewer._put_object = function(data, parent_id, left, key, indent) {
         this._id += 1; 
-        document.body.innerHTML += "<div data-state=\"1\" parent_id=\"" + parent_id + "\" id=\"" + this._id + "\" style=\"left:" + left + "px;\" data_type=\"Object\" ><div class=\"mark\">+</div><span class=\"key_value\">" + key + ":{}</span></div>"
+        document.body.innerHTML += Hogan.compile(document.getElementById("_put_object").innerText).render({left: left, parent_id: parent_id, key: key, id: this._id})
         indent += 1
         var next_parent_id = this._id
         Object.keys(data).map(function(key) {
@@ -16,7 +16,7 @@ json_viewer._put_object = function(data, parent_id, left, key, indent) {
 
 json_viewer._put_array = function(data, parent_id, left, key, indent) {
         this._id += 1; 
-        document.body.innerHTML += "<div data-state=\"1\"  parent_id=\"" + parent_id + "\" id=\"" + this._id + "\"  style=\"left:" + left + "px;\" data_type=\"Array\" ><div class=\"mark\">+</div><span class=\"key_value\">" + key + ":&nbsp;[]</span></div>"
+        document.body.innerHTML += Hogan.compile(document.getElementById("_put_array").innerText).render({left: left, parent_id: parent_id, key: key, id: this._id})
         indent += 1
         var next_parent_id = this._id
         data.map(function(value, index) {
@@ -26,22 +26,22 @@ json_viewer._put_array = function(data, parent_id, left, key, indent) {
 
 json_viewer._put_string = function(data, parent_id, left, key) {
         this._id += 1; 
-        document.body.innerHTML += "<div data-state=\"1\"  parent_id=\"" + parent_id + "\" id=\"" + this._id + "\" style=\"left:" + left + "px;\" data_type=\"String\" ><span class=\"key_value\">" + key + ":&nbsp;\"" + data + "\"</span></div>"
+        document.body.innerHTML += Hogan.compile(document.getElementById("_put_string").innerText).render({left: left, parent_id: parent_id, key: key, id: this._id, data: data})
 }
 
 json_viewer._put_null = function(data, parent_id, left, key) {
         this._id += 1; 
-        document.body.innerHTML += "<div data-state=\"1\"  parent_id=\"" + parent_id + "\" id=\"" + this._id + "\"  style=\"left:" + left + "px;\" data_type=\"null\" ><span class=\"key_value>\"" + key + ":&nbsp;null</span></div>"
+        document.body.innerHTML += Hogan.compile(document.getElementById("_put_null").innerText).render({left: left, parent_id: parent_id, key: key, id: this._id})
 }
 
 json_viewer._put_undefined = function(data, parent_id, left, key) {
         this._id += 1; 
-        document.body.innerHTML += "<div data-state=\"1\"  parent_id=\"" + parent_id + "\" id=\"" + this._id + "\"  style=\"left:" + left + "px;\" data_type=\"undefined\" ><span class=\"key_value\">" + key + ":&nbsp;undefined</span></div>"
+        document.body.innerHTML += Hogan.compile(document.getElementById("_put_undefined").innerText).render({left: left, parent_id: parent_id, key: key, id: this._id})
 }
 
 json_viewer._put_number = function(data, parent_id, left, key) {
         this._id += 1; 
-        document.body.innerHTML += "<div data-state=\"1\"  parent_id=\"" + parent_id + "\" id=\"" + this._id + "\"  style=\"left:" + left + "px;\" data_type=\"Number\" ><span class=\"key_value\">" + key + ":&nbsp;" + data + "</span></div>"
+        document.body.innerHTML += Hogan.compile(document.getElementById("_put_number").innerText).render({left: left, parent_id: parent_id, key: key, id: this._id, data: data})
 }
 
 json_viewer._put = function(data, indent, key, parent_id) {
