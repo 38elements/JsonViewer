@@ -11,6 +11,14 @@ div {
     vertical-align: middle;
 }
 
+[data_type="Array"][data-state="1"], [data_type="Object"][data-state="1"]{
+    background-color: #FFE4E1;
+}
+
+[data_type="Array"][data-state="0"], [data_type="Object"][data-state="0"]{
+    background-color: #90EE90;
+}
+
 div.mark {
     margin-top: 1px;
     margin-bottom: 1px;
