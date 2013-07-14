@@ -154,14 +154,25 @@ var json_viewer = (function() {
                 c.addEventListener('click', change, false);
             });
         },
+        
+        black_all = function() {
+            var child_list = document.querySelectorAll('.red');
+            var children = Array.prototype.slice.call(child_list);
+            children.map(function(elem) {
+                elem.classList.remove('red');
+            });
+        },
 
         search = function(input_id) {
             var key =  document.getElementById(input_id).value;
             var child_list = document.querySelectorAll('[key="' + key + '"]');
             var children = Array.prototype.slice.call(child_list);
+            var key_elem;
             close_all();
+            black_all();
             children.map(function(elem) {
                 open_parent(elem);
+                elem.classList.add('red');
             });
         };
 

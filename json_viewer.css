@@ -14,6 +14,11 @@ div {
     left: -14px;
 }
 
+.red {
+    color: red;
+    font-weight: bold;
+}
+
 .mark {
     position: relative;
     left: -17px;
