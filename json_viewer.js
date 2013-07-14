@@ -163,9 +163,11 @@ var json_viewer = (function() {
             });
         },
 
-        search = function(input_id) {
+        search = function(input_id, type_name) {
             var key =  document.getElementById(input_id).value;
-            var child_list = document.querySelectorAll('[key="' + key + '"]');
+            var input_list = document.querySelectorAll('[name="' + type_name + '"]');
+            var condition = Array.prototype.slice.call(input_list).filter(function(elem){ return elem.checked;})[0].value;
+            var child_list = document.querySelectorAll('[key' + condition + '="' + key + '"]');
             var children = Array.prototype.slice.call(child_list);
             var key_elem;
             close_all();
@@ -180,8 +182,8 @@ var json_viewer = (function() {
         document.getElementById(button_id).addEventListener('click', display.bind(null, input_id, output_id), false);
     }
 
-    json_viewer.set_search  = function(button_id, input_id) {
-        document.getElementById(button_id).addEventListener('click', search.bind(null, input_id), false);
+    json_viewer.set_search  = function(button_id, input_id, type_name) {
+        document.getElementById(button_id).addEventListener('click', search.bind(null, input_id, type_name), false);
     }
     
     return json_viewer;
